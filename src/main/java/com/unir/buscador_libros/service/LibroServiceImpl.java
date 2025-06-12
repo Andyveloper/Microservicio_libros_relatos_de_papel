@@ -20,7 +20,7 @@ public class LibroServiceImpl implements LibrosService {
   }
 
   @Override
-  public List<Libro> getBooksByParams(Long id, String titulo, String autor, String categoria, String isbn, String valoracion, boolean visibilidad) {
+  public List<Libro> getBooksByParams(Long id, String titulo, String autor, String categoria, String isbn, String valoracion, Boolean visibilidad) {
     return libroJpaRepository.findAllByParams(id, titulo, autor, categoria, isbn, valoracion, visibilidad);
   }
 
