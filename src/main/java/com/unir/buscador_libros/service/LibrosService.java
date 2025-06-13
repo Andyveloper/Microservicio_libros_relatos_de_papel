@@ -9,7 +9,7 @@ public interface LibrosService {
 
   List<Libro> getBooks();
 
-  List<Libro> getBooksByParams(Long id, String titulo, String autor, String categoria, String isbn, String valoracion, boolean visibilidad);
+  List<Libro> getBooksByParams(Long id, String titulo, String autor, String categoria, String isbn, String valoracion, Boolean visibilidad);
 
   Libro getLibroById(Long id);
 
