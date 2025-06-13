@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,12 +22,6 @@ public class BooksController {
   private final LibrosService librosService;
 
   @GetMapping("/libros")
-  public ResponseEntity<List<Libro>> getBooks() {
-    List<Libro> libros = librosService.getBooks();
-    return libros != null ? ResponseEntity.ok(libros) : ResponseEntity.ok(Collections.emptyList());
-  }
-
-  @GetMapping("/libros/buscar")
   public ResponseEntity<List<Libro>> getBooksByParams(
           @RequestParam(required = false) Long id,
           @RequestParam(required = false) String titulo,
@@ -35,6 +31,13 @@ public class BooksController {
           @RequestParam(required = false) String valoracion,
           @RequestParam(required = false) Boolean visibilidad
   ) {
+
+    if (Stream.of(id, titulo, autor, categoria, isbn, valoracion, visibilidad)
+            .allMatch(Objects::isNull)) {
+      List<Libro> libros = librosService.getBooks();
+      return libros != null ? ResponseEntity.ok(libros) : ResponseEntity.ok(Collections.emptyList());
+    }
+
     List<Libro> resultados = librosService.getBooksByParams(id, titulo, autor, categoria, isbn, valoracion, visibilidad);
     return resultados.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resultados);
   }
